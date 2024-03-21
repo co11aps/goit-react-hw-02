@@ -1,0 +1,13 @@
+// import App from "../App/App";
+
+const Feedback = () => {
+  return (
+    <div>
+      <p>Good: </p>
+      <p>Neutral: </p>
+      <p>Bad: </p>
+    </div>
+  );
+};
+
+export default Feedback;
