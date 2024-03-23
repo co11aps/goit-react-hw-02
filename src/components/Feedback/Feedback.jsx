@@ -1,11 +1,13 @@
 // import App from "../App/App";
 
-const Feedback = () => {
+const Feedback = ({ feedbacks, totalFeedback, positive }) => {
   return (
     <div>
-      <p>Good: </p>
-      <p>Neutral: </p>
-      <p>Bad: </p>
+      <p>Good: {feedbacks.good}</p>
+      <p>Neutral: {feedbacks.neutral}</p>
+      <p>Bad: {feedbacks.bad}</p>
+      <p>Total: {totalFeedback}</p>
+      <p>Positive: {positive}%</p>
     </div>
   );
 };

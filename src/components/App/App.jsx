@@ -2,45 +2,60 @@ import { useState, useEffect } from "react";
 import Description from "../Description/Description";
 import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
+import Notification from "../Notification/Notification";
 
 const App = () => {
-  const [feedbacks, setFeedbacks] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  // const [feedbacks, setFeedbacks] = useState({
+  //   good: 0,
+  //   neutral: 0,
+  //   bad: 0,
+  // });
+
+  const [feedbacks, setFeedbacks] = useState(() => {
+    const savedFeedbacks = window.localStorage.getItem("saved-feedbacks");
+    if (savedFeedbacks !== null) {
+      return savedFeedbacks;
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem("saved-feedbacks", feedbacks);
+    console.log(feedbacks);
   });
 
   const updateFeedback = (feedbackType) => {
-    console.log(feedbackType);
-    const key = feedbackType;
     setFeedbacks({
       ...feedbacks,
-      key: feedbacks.key + 1,
+      [feedbackType]: (feedbacks[feedbackType] += 1),
     });
-    console.log(feedbacks);
   };
 
-  // const [clicks, setClicks] = useState(() => {
-  //   const savedClicks = window.localStorage.getItem("saved-clicks");
-  //   if (savedClicks !== null) {
-  //     return savedClicks;
-  //   }
-  //   return 0;
-  // });
+  const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
 
-  // useEffect(() => {
-  //   window.localStorage.setItem("saved-clicks", clicks);
-  // }, [clicks]);
+  const positiveFeedback = Math.round((feedbacks.good / totalFeedback) * 100);
 
   return (
     <div>
       <Description />
-      <Options onUpdate={updateFeedback} />
-      <Feedback />
-      {/* <button onClick={() => setClicks(clicks + 1)}>
-        You clicked {clicks} times
-      </button>
-      <button onClick={() => setClicks(0)}>Reset</button> */}
+      <Options
+        updateFeedback={updateFeedback}
+        setFeedbacks={setFeedbacks}
+        totalFeedback={totalFeedback}
+      />
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedbacks={feedbacks}
+          totalFeedback={totalFeedback}
+          positive={positiveFeedback}
+        />
+      ) : (
+        <Notification />
+      )}
     </div>
   );
 };
