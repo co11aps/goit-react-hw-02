@@ -1,4 +1,10 @@
-// import App from "../App/App";
+import {
+  AiTwotoneSmile,
+  AiTwotoneMeh,
+  AiTwotoneFrown,
+  AiTwotoneCloseCircle,
+} from "react-icons/ai";
+import css from "./Options.module.css";
 
 const Options = ({ updateFeedback, setFeedbacks, totalFeedback }) => {
   const handleResetFeedbacks = () => {
@@ -10,14 +16,38 @@ const Options = ({ updateFeedback, setFeedbacks, totalFeedback }) => {
   };
 
   return (
-    <>
-      <button onClick={() => updateFeedback("good")}>Good</button>
-      <button onClick={() => updateFeedback("neutral")}>Neutral</button>
-      <button onClick={() => updateFeedback("bad")}>Bad</button>
+    <div className={css["buttons-block"]}>
+      <button
+        className={css["options-button"]}
+        onClick={() => updateFeedback("good")}
+      >
+        Good
+        <AiTwotoneSmile />
+      </button>
+      <button
+        className={css["options-button"]}
+        onClick={() => updateFeedback("neutral")}
+      >
+        Neutral
+        <AiTwotoneMeh />
+      </button>
+      <button
+        className={css["options-button"]}
+        onClick={() => updateFeedback("bad")}
+      >
+        Bad
+        <AiTwotoneFrown />
+      </button>
       {totalFeedback > 0 && (
-        <button onClick={handleResetFeedbacks}>Reset</button>
+        <button
+          className={css["options-button"]}
+          onClick={handleResetFeedbacks}
+        >
+          Reset
+          <AiTwotoneCloseCircle />
+        </button>
       )}
-    </>
+    </div>
   );
 };
 
