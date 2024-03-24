@@ -5,16 +5,10 @@ import Feedback from "../Feedback/Feedback";
 import Notification from "../Notification/Notification";
 
 const App = () => {
-  // const [feedbacks, setFeedbacks] = useState({
-  //   good: 0,
-  //   neutral: 0,
-  //   bad: 0,
-  // });
-
   const [feedbacks, setFeedbacks] = useState(() => {
     const savedFeedbacks = window.localStorage.getItem("saved-feedbacks");
-    if (savedFeedbacks !== null) {
-      return savedFeedbacks;
+    if (savedFeedbacks) {
+      return JSON.parse(savedFeedbacks);
     }
     return {
       good: 0,
@@ -24,9 +18,9 @@ const App = () => {
   });
 
   useEffect(() => {
-    window.localStorage.setItem("saved-feedbacks", feedbacks);
-    console.log(feedbacks);
-  });
+    window.localStorage.setItem("saved-feedbacks", JSON.stringify(feedbacks));
+  }),
+    [feedbacks];
 
   const updateFeedback = (feedbackType) => {
     setFeedbacks({
