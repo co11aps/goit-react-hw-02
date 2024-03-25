@@ -19,13 +19,12 @@ const App = () => {
 
   useEffect(() => {
     window.localStorage.setItem("saved-feedbacks", JSON.stringify(feedbacks));
-  }),
-    [feedbacks];
+  }, [feedbacks]);
 
   const updateFeedback = (feedbackType) => {
     setFeedbacks({
       ...feedbacks,
-      [feedbackType]: (feedbacks[feedbackType] += 1),
+      [feedbackType]: feedbacks[feedbackType] + 1,
     });
   };
 
